@@ -1,0 +1,36 @@
+@import "../../styles/global_styles/variables";
+@import "../../styles/global_styles/mixins";
+@import "../../styles/global_styles/animations";
+
+.color-rating {
+  font-size: 1.2rem;
+  padding: 0.3em;
+  background-color: $white;
+  text-align: center;
+  @include flex-box($flex-box-row-center...);
+
+  .star {
+    display: inline-block;
+    cursor: pointer;
+    height: 1em;
+    width: 1em;
+    margin: 0 0.1em;
+    background-color: grey;
+    clip-path: polygon(
+                    50% 0%,
+                    63% 38%,
+                    100% 38%,
+                    69% 59%,
+                    82% 100%,
+                    50% 75%,
+                    18% 100%,
+                    31% 59%,
+                    0% 38%,
+                    37% 38%
+    );
+
+    &.selected {
+      background-color: $foxy;
+    }
+  }
+}

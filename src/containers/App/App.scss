@@ -1,0 +1,113 @@
+@import "../../styles/global_styles/variables";
+@import "../../styles/global_styles/mixins";
+@import "../../styles/global_styles/animations";
+
+.colors-bar {
+  flex-basis: 28em;
+  //flex-grow: 1;
+  padding: 0.5em;
+
+  @include flex-box($flex-box-row-center...);
+
+  .color-list-wrapper {
+    max-width: 30em;
+
+    @include flex-box($flex-box-row-center...);
+
+    h4 {
+      text-align: center;
+      line-height: 1.2em;
+    }
+
+    .filter-wrapper {
+      width: 100%;
+      margin-top: 1em;
+
+      span {
+        display: inline-block;
+        margin: 0.2em 0.3em;
+      }
+
+      .filter {
+        position: relative;
+        cursor: pointer;
+        padding: 0.3em;
+
+        @include init-font(1em, 700);
+        @include transition(transform, 0.15s);
+
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          transform: skewX(-20deg);
+          background-color: $violet;
+          opacity: 0.3;
+
+          @include transition(all, 0.2s);
+        }
+
+        &:hover {
+          transform: translateY(-0.1em);
+          @include text-shadow(0.05em, 0.07em);
+
+          &::before {
+            opacity: 0;
+          }
+        }
+      }
+    }
+
+    .color-list {
+      margin: 0.7em 0;
+      border: 1px solid $greyLight;
+      max-width: 30em;
+      @include flex-box($flex-box-row-center...);
+    }
+  }
+}
+
+.color-wrapper {
+  width: 6em;
+  overflow: hidden;
+  margin: 0.25em;
+  border: 1px solid $greyLight;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.current {
+    width: 100%;
+    margin: 0;
+    background-color: $greyLightest;
+
+    @include box-shadow(0.1em, 0.2em);
+
+    &:hover {
+      cursor: initial;
+    }
+
+    .color-sample {
+      height: 10em;
+    }
+
+    .color-rating {
+      font-size: 1.05rem;
+      height: 2em;
+    }
+  }
+
+  .color-sample {
+    width: 100%;
+    height: 2em;
+    padding: 0 0.5em;
+    //background-color: lightgreen;
+
+    @include flex-box($flex-box-row-center...);
+    @include init-font(0.8em, 700);
+  }
+}
