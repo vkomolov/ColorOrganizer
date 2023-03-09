@@ -4,13 +4,12 @@ import ColorInputs from "../ColorInputs";
 import "./AsideBar.scss";
 
 
-export default function AsideBar({ratingParams, currentColorProps}) {
-
+export default function AsideBar({ copyValue, ratingProps, currentColorProps, alertProps }) {
     return (
         <div className="aside-bar">
             {/*//forwarding full props*/}
-            <ColorSample {...{currentColorProps}} />
-            <ColorInputs {...{ratingParams}}/>
+            <ColorSample {...{currentColorProps}} {...{alertProps}} copyValue={copyValue} />
+            <ColorInputs {...{ ratingProps }} />
         </div>
     );
 }

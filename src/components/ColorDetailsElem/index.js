@@ -1,16 +1,39 @@
 import React from "react";
 import "./ColorDetailsElem.scss";
 
+import AlertBlock from "../AlertBlock";
+
 export default function ColorDetailsElem (props) {
-    let {splittedStr, attr: {dataProp, copyable}, value} = props;
+    const {
+        splittedStr,
+        attr: {
+            prop,
+            copyable
+        },
+        value,
+        alertState,
+    } = props;
+
+    const { alertSource, ...alertData } = alertState;
+    const checkLocalAlert = function (alertState, localSource) {
+        const ifHasValue = Object.values(alertState).every(el => {
+            return el !== null;
+        });
+
+        return ifHasValue ? alertSource === localSource : false;
+    };
 
     return (
         <div className="color-details-elem">
             <span className="color-details-heading">{splittedStr + ": "}</span>
-            <span data-prop={dataProp}
+            <span data-src={prop}
                   className={copyable ? "color-details-value copyable" : "color-details-value"}
                   title={copyable ? "copy..." : splittedStr}
             >
+                {
+                    checkLocalAlert(alertState, prop)
+                    && <AlertBlock {...alertData} />
+                }
                 {value}
             </span>
         </div>

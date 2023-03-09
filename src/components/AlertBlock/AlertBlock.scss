@@ -1,0 +1,22 @@
+@import "../../styles/global_styles/variables";
+@import "../../styles/global_styles/mixins";
+@import "../../styles/global_styles/animations";
+
+.alert-message {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  width: max-content;
+  padding: 0.5em;
+  background-color: $white;
+  box-shadow: inset -0.1em -0.1em 0.5em $green, inset 0.1em 0.1em 0.5em $green;
+  cursor: initial;
+
+  animation: scaleUpZero 0.5s ease-in-out;
+
+  @include init-font(0.8em, 700);
+
+  &.error {
+    box-shadow: inset -0.1em -0.1em 0.5em $red, inset 0.1em 0.1em 0.5em $red;
+  }
+}

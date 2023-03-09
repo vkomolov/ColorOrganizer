@@ -10,46 +10,112 @@ import "./App.scss";
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-           currentColor: {
-               colorName: "default",
-               colorHex: null,
-               creationDate: Date.now(),
-               rating: 0
-           }
+        this._defaultColor = {
+            colorName: "white",
+            colorHex: "#ffffff",
+            creationDate: Date.now(),
+            rating: 0
+        };
+        this._defaultAlert = {
+            alertMode: null, //can be null, "alert", "error"
+            alertSource: null,   //where to handle alert in absolute position
+            alertMessage: null, //what will be shown in alert
         };
 
-        this.colors = [];
-        this.callRating = this.callRating.bind(this);
+        this.state = {
+            colorState: {
+                colorsArr: [],
+                currentColor: {
+                    ...this._defaultColor
+                },
+            },
+            alertState: {
+               ...this._defaultAlert
+            }
+        };
+
+        this.setRating = this.setRating.bind(this);
+        this.dispatchAlert = this.dispatchAlert.bind(this);
+        this.copyValue = this.copyValue.bind(this);
+        //this.resetAlert - this.resetAlert.bind(this);
     }
     //END OF CONSTRUCTOR
 
-    callRating({target}) {
-        const rating = target.dataset.num;
-        //log(rating, "star rated:");
-        this.setState(state => {
-            let stateOut = Object.assign({}, state);
-            if (state.currentColor.rating !== rating) {
-                stateOut = {
-                    currentColor: {
-                        ...state.currentColor,
-                        rating,
-                    }
-                };
+    /**
+     *
+     * **/
+    async copyValue({ target }) {
+        if (target.classList.contains("copyable")) {
+            const value = target.textContent;
+            const targetSrc = target.getAttribute("data-src");
+
+            try {
+                await navigator.clipboard.writeText(value);
+                log(value, "copied:");
+
+                this.dispatchAlert("copied...", targetSrc, "alert");
             }
+            catch(err) {
+                console.error("Error in copying text: ", err);
+            }
+        }
+    }
 
-            //log(stateOut, "stateOut:");
+    /**
+     * */
+    setRating({target}) {
+        if (target.dataset.num) {
+            const rating = target.dataset.num;
+            log(rating, "star rated:");
+            const {colorState: {currentColor}} = this.state;
 
-            return stateOut;
-        })
+            if (rating !== currentColor.rating) {
+                this.setState(prevState => ({
+                    colorState: {
+                        currentColor: {
+                            ...prevState.colorState.currentColor,
+                            rating
+                        }
+                    }
+                }));
+            }
+        }
+    }
+
+    /**
+     * */
+    dispatchAlert(message, source, mode = "alert") { //null, "alert", "error"
+        if (this.state.alertState.alertMode === null) {
+            this.setState({
+                alertState: {
+                    alertMode: mode,
+                    alertSource: source,
+                    alertMessage: message
+                }
+            });
+
+            if (mode === "alert") {
+                setTimeout(() => {
+                    this.resetAlert();
+                }, 1500);
+            }
+        }
+    }
+
+    /**
+     * **/
+    resetAlert() {
+        this.setState({
+            alertState: {
+                ...this._defaultAlert
+            }
+        });
     }
 
     render() {
-        const { colorName, colorHex, creationDate, rating } = this.state.currentColor;
+        log("render");
+        const { colorName, colorHex, creationDate, rating } = this.state.colorState.currentColor;
         const colorRgb = colorHex ? hexToRgb(colorHex) : colorHex;
-        //log(colorHex, "colorHex");
-        //log(colorRgb, "colorRgb");
 
         //making the object in a certain order of the properties
         const colorProps = {
@@ -60,8 +126,6 @@ export default class App extends React.Component {
             rating
         };
 
-        //log(Object.keys(colorProps), "Object.keys(colorProps)");
-
         const currentColorProps = Object.keys(colorProps).map(prop => {
             let splittedStr = prop.split(/(?=[A-Z])/)
                 .map(str => {
@@ -69,7 +133,14 @@ export default class App extends React.Component {
             })
                 .join(" ");
 
-            const copyable = prop === "colorName" || prop === "colorHex" || prop === "colorRGB";
+            const copyable = prop === "colorName" || prop === "colorHex" || prop === "colorRgb";
+            let auxValue = colorProps[prop];
+            if (prop === "creationDate") {
+                auxValue = new Date(colorProps[prop]).toLocaleDateString();
+            }
+            if (prop === "rating") {
+                auxValue += " stars...";
+            }
 
             return {
                 splittedStr,
@@ -77,22 +148,28 @@ export default class App extends React.Component {
                     prop,
                     copyable
                 },
-                value: prop === "creationDate"
-                    ? new Date(colorProps[prop]).toLocaleDateString()
-                    : colorProps[prop],   //value or null
+                value: auxValue
             };
         });
 
-        //log(currentColorProps, "currentColorProps");
+        const alertProps = {
+            alertState: this.state.alertState,
+            dispatchAlert: this.dispatchAlert,
+        };
 
-        const ratingParams = {
-            callRating: this.callRating,
+        const ratingProps = {
             rating,
+            setRating: this.setRating,
         };
 
         return (
             <React.Fragment>
-                <AsideBar {...{ ratingParams }} {...{ currentColorProps }} />
+                <AsideBar
+                    copyValue={ this.copyValue }
+                    {...{ ratingProps }}
+                    {...{ currentColorProps }}
+                    {...{ alertProps }}
+                />
                 <ColorsBar />
 
                 {/*<div className="aside-bar">

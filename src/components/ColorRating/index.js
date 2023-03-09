@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ColorRating.scss";
 
-export default function ColorRating ({rating, callRating}) {
+export default function ColorRating ({rating, setRating}) {
     const starList = [];
 
     for (let i = 1; i <= 5; i++) {
@@ -21,7 +21,7 @@ export default function ColorRating ({rating, callRating}) {
         <div
             className="color-rating"
             title="Rate the color"
-            onClick={callRating}
+            onClick={setRating}
         >
             { starList }
         </div>

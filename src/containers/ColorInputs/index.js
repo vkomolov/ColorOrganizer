@@ -3,14 +3,12 @@ import "./ColorInputs.scss";
 //components
 import ColorRating from "../../components/ColorRating";
 
-export default function ColorInputs ({ratingParams}) {
-    const {rating = 0, callRating = () => {}} = ratingParams;
-
-    //log(rating, "rating in ColorInputs:");
+export default function ColorInputs ({ ratingProps }) {
+    const {rating = 0, setRating = () => {}} = ratingProps;
 
     return (
         <div className="color-inputs-wrapper">
-            <ColorRating rating={rating} callRating={callRating} />
+            <ColorRating rating={rating} setRating={setRating} />
             colorInputs
         </div>
     );
