@@ -1,0 +1,50 @@
+@import "../../styles/global_styles/variables";
+@import "../../styles/global_styles/mixins";
+@import "../../styles/global_styles/animations";
+@import "../../styles/global_styles/extends";
+
+.input-section {
+  padding: 0.5em 0;
+
+  .color-inputs-heading {
+    @extend %heading-details;
+    padding: 0 0.5em;
+  }
+
+  .color-inputs-wrapper {
+    margin: 1em auto;
+  }
+
+  .button-section {
+    @include flex-box($flex-box-row-center...);
+
+    .button {
+      width: 5em;
+      text-align: center;
+      padding: 0.4em;
+      margin: 1em 0.5em;
+      border: 1px solid $greyLight;
+      cursor: pointer;
+
+      @include transition(all, 0.1s);
+      @include box-shadow(0.05em, 0.3em);
+      @include init-font(0.8em, 700);
+
+      &:hover {
+        transform: scale(1.02);
+        @include box-shadow(0.15em, 0.35em);
+      }
+
+      &.save {
+        color: $violet;
+        background-color: $foxy;
+      }
+
+      &.cancel {
+        color: $violet;
+        background-color: $greyLight;
+      }
+    }
+  }
+}
+

@@ -21,3 +21,11 @@
     @include box-shadow(2px, 3px);
   }
 }
+
+%heading-details {
+  color: $foxy;
+  margin-bottom: 0.5em;
+
+  @include init-font(1em, 700);
+  @include text-shadow(0.08em, 0.1em);
+}

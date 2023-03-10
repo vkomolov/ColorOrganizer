@@ -18,6 +18,7 @@ export default function ColorDetails ({ currentColorProps, alertProps, copyValue
 
     return (
         <div id="color-details" onClick={copyValue}>
+            <h4 className="color-sample-heading">Current Color:</h4>
             { dataPropElems }
         </div>
     );

@@ -8,8 +8,15 @@ export default function AsideBar({ copyValue, ratingProps, currentColorProps, al
     return (
         <div className="aside-bar">
             {/*//forwarding full props*/}
-            <ColorSample {...{currentColorProps}} {...{alertProps}} copyValue={copyValue} />
-            <ColorInputs {...{ ratingProps }} />
+            <ColorSample
+                {...{currentColorProps}}
+                {...{alertProps}}
+                copyValue={copyValue}
+            />
+            <ColorInputs
+                {...{currentColorProps}}
+                {...{alertProps}}
+                {...{ ratingProps }}  />
         </div>
     );
 }

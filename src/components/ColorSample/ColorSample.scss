@@ -4,6 +4,7 @@
 
 .color-sample {
   height: 12em;
+  padding: 0.5em;
   border: 1px solid $greyLight;
 
   @include flex-box($flex-box-row-center...);

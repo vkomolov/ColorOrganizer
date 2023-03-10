@@ -5,54 +5,5 @@
 .aside-bar {
   width: 14em;
   padding: 0.5em;
-  border: 1px dotted blue;
-
-  .color-inputs-wrapper {
-    padding: 0.3em 0.5em;
-
-    .input-wrapper {
-      position: relative; //to do hint messages in absolute
-      display: inline-block;
-      width: 100%;
-      height: 1.3em;
-      margin-bottom: 0.4em;
-
-      @include box-shadow(0.1em, 0.2em);
-
-      input {
-        width: 100%;
-        height: 100%;
-        @include init-font(0.8em, 700);
-
-        &[type="color"] {
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-      }
-    }
-
-    .button {
-      width: 5em;
-      padding: 0.4em;
-      margin: 1em 0;
-      border: 1px solid $foxy;
-      color: $blueDark;
-      cursor: pointer;
-
-      @include transition(all, 0.1s);
-      @include box-shadow(0.07em, 0.1em);
-      @include init-font(0.8em, 700);
-
-      &:hover {
-        transform: scale(1.02);
-        @include box-shadow(0.15em, 0.2em);
-      }
-
-      &.submit {
-        background-color: $foxy;
-      }
-    }
-  }
+  border: 1px solid $foxy;
 }

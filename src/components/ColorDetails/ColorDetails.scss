@@ -1,10 +1,14 @@
 @import "../../styles/global_styles/variables";
 @import "../../styles/global_styles/mixins";
 @import "../../styles/global_styles/animations";
+@import "../../styles/global_styles/extends";
 
 #color-details {
   @include init-font(0.8em, 700);
 
   line-height: 1.5em;
-  padding: 0.5em;
+
+  .color-sample-heading {
+    @extend %heading-details;
+  }
 }
