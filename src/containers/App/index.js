@@ -5,7 +5,6 @@ import ColorsBar from "../ColorsBar";
 //import {rgbToHex, getContrastColor} from "../../utils/funcs";
 import {hexToRgb} from "../../utils/funcs";
 
-import "./App.scss";
 
 export default class App extends React.Component {
     constructor(props) {

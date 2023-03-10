@@ -4,14 +4,20 @@ import ColorDetails from "../ColorDetails";
 import "./ColorSample.scss";
 
 export default function ColorSample (props) {
-    const backgroundColor = props.currentColorProps.colorHex
-        ? props.currentColorProps.colorHex
-        : "initial";
+    const { currentColorProps } = props;
+    const getCurrentColorHex = (currentColorProps) => {
+        for (let i = 0; i < currentColorProps.length; i++) {
+            if(currentColorProps[i].attr.prop === "colorHex") {
+                return currentColorProps[i].value;
+            }
+        }
+        return "initial"
+    };
 
     return (
         <div className="color-sample"
              style={{
-                 backgroundColor,
+                 backgroundColor: getCurrentColorHex(currentColorProps),
              }}
         >
             {/*//forwarding props :))*/}
