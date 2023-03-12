@@ -51,7 +51,6 @@ export default function ColorInputs ({ currentColorProps, alertProps, ratingProp
             return index !== 0 ? namePart[0].toUpperCase() + namePart.slice(1) : namePart;
         }).join("");
 
-        //log(inputProp, "inputProp: ");
         const targetObj = findObjByPropInArray("prop", inputProp, currentColorProps);
         //if the param name is not found in the currentColorProps then to write value=""
         const value = (targetObj && targetObj.value) ? targetObj.value : "";

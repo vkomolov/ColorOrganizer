@@ -10,9 +10,9 @@ export default function InputWrapper ({ inputParamsReady }) {
             <input type={type}
                    name={name}
                    title={title}
-                   value={value}
-                   /*placeholder = {colorProps.colorName}*/
+                   placeholder={value}
                    required={required}
+                   autoComplete="off"
             />
         </div>
     );

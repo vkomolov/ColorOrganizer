@@ -3,14 +3,16 @@ import React from "react";
 import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
 //import {rgbToHex, getContrastColor} from "../../utils/funcs";
-import {hexToRgb} from "../../utils/funcs";
+import { hexToRgb } from "../../utils/funcs";
+//import { regExObj } from "../../utils/initialParams"; //todo: to test inputs onInput
+
 
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this._defaultColor = {
-            colorName: "white",
+            colorName: "White",
             colorHex: "#ffffff",
             creationDate: Date.now(),
             rating: 0
@@ -23,7 +25,9 @@ export default class App extends React.Component {
 
         this.state = {
             colorState: {
-                colorsArr: [],
+                colorsArr: [
+                    this._defaultColor,
+                ],
                 currentColor: {
                     ...this._defaultColor
                 },
@@ -38,7 +42,7 @@ export default class App extends React.Component {
         this.copyValue = this.copyValue.bind(this);
         //this.resetAlert - this.resetAlert.bind(this);
     }
-    //END OF CONSTRUCTOR
+    ////////////// END OF CONSTRUCTOR ///////////////////////
 
     /**
      *
@@ -111,10 +115,14 @@ export default class App extends React.Component {
         });
     }
 
+    /**
+     ***/
+
+
     render() {
         log("render");
         const { colorName, colorHex, creationDate, rating } = this.state.colorState.currentColor;
-        const colorRgb = colorHex ? hexToRgb(colorHex) : colorHex;
+        const colorRgb = colorHex ? hexToRgb(colorHex) : "";
 
         //making the object in a certain order of the properties
         const colorProps = {
