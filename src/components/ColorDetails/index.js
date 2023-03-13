@@ -3,9 +3,7 @@ import "./ColorDetails.scss";
 //components
 import ColorDetailsElem from "../ColorDetailsElem";
 
-export default function ColorDetails ({ currentColorProps, alertProps, copyValue }) {
-    //const {alertState, dispatchAlert} = alertProps;
-    const { alertState } = alertProps;
+export default function ColorDetails ({ currentColorProps, alertState, copyValue }) {
     //the properties of the color are mapped for forwarding separate components
 
     const dataPropElems = currentColorProps.map(propElem => {

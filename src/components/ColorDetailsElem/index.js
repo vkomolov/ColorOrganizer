@@ -1,5 +1,6 @@
 import React from "react";
 import "./ColorDetailsElem.scss";
+import { checkLocalAlert } from "../../utils/funcs";
 
 import AlertBlock from "../AlertBlock";
 
@@ -14,15 +15,6 @@ export default function ColorDetailsElem (props) {
         alertState,
     } = props;
 
-    const { alertSource, ...alertData } = alertState;
-    const checkLocalAlert = function (alertState, localSource) {
-        const ifHasValue = Object.values(alertState).every(el => {
-            return el !== null;
-        });
-
-        return ifHasValue ? alertSource === localSource : false;
-    };
-
     return (
         <div className="color-details-elem">
             <span className="color-details-heading">{splittedStr + ": "}</span>
@@ -32,7 +24,7 @@ export default function ColorDetailsElem (props) {
             >
                 {
                     checkLocalAlert(alertState, prop)
-                    && <AlertBlock {...alertData} />
+                    && <AlertBlock {...alertState} />
                 }
                 {value}
             </span>

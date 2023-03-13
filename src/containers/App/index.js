@@ -4,7 +4,8 @@ import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
 //import {rgbToHex, getContrastColor} from "../../utils/funcs";
 import { hexToRgb } from "../../utils/funcs";
-//import { regExObj } from "../../utils/initialParams"; //todo: to test inputs onInput
+import { regExObj } from "../../utils/regExpParams"; //todo: to test inputs onInput
+import { testInput } from "../../utils/funcs";
 
 
 
@@ -25,9 +26,7 @@ export default class App extends React.Component {
 
         this.state = {
             colorState: {
-                colorsArr: [
-                    this._defaultColor,
-                ],
+                colorsArr: [],
                 currentColor: {
                     ...this._defaultColor
                 },
@@ -40,7 +39,9 @@ export default class App extends React.Component {
         this.setRating = this.setRating.bind(this);
         this.dispatchAlert = this.dispatchAlert.bind(this);
         this.copyValue = this.copyValue.bind(this);
-        //this.resetAlert - this.resetAlert.bind(this);
+        this.resetAlert = this.resetAlert.bind(this);
+        this.onBlurHandle = this.onBlurHandle.bind(this);
+        this.onInputHandle = this.onInputHandle.bind(this);
     }
     ////////////// END OF CONSTRUCTOR ///////////////////////
 
@@ -88,6 +89,7 @@ export default class App extends React.Component {
     /**
      * */
     dispatchAlert(message, source, mode = "alert") { //null, "alert", "error"
+        //if no alert on, then to set alert state
         if (this.state.alertState.alertMode === null) {
             this.setState({
                 alertState: {
@@ -117,10 +119,35 @@ export default class App extends React.Component {
 
     /**
      ***/
+    onBlurHandle({ target }) {
+        log(target.value, "target.value onBlurHandle:");
+    }
+
+    onInputHandle({ target }) {
+        //log(target.name, "target.name on input:");
+        //log(target.dataset.src, "target.dataset.src");
+
+        if (regExObj[target.name]) {
+            if (!testInput(target.value, target.name, regExObj)) {
+                this.dispatchAlert(regExObj[target.name].errorMessage, target.name, "error");
+                setTimeout(() => {
+                    target.value = target.value.slice(0, -1);
+                    if (!target.value.length) {
+                        setTimeout(() => this.resetAlert(), 500);
+                    }
+                }, 700);
+            }
+            else {
+                this.resetAlert();
+            }
+        }
+
+
+    }
 
 
     render() {
-        log("render");
+        log("rendering");
         const { colorName, colorHex, creationDate, rating } = this.state.colorState.currentColor;
         const colorRgb = colorHex ? hexToRgb(colorHex) : "";
 
@@ -159,23 +186,30 @@ export default class App extends React.Component {
             };
         });
 
-        const alertProps = {
+/*        const alertProps = {
             alertState: this.state.alertState,
             dispatchAlert: this.dispatchAlert,
-        };
+
+        };*/
 
         const ratingProps = {
             rating,
             setRating: this.setRating,
         };
 
+        const inputHandles = {
+            onBlurHandle: this.onBlurHandle,
+            onInputHandle: this.onInputHandle,
+        };
+
         return (
             <React.Fragment>
                 <AsideBar
                     copyValue={ this.copyValue }
+                    alertState={ this.state.alertState }
                     {...{ ratingProps }}
                     {...{ currentColorProps }}
-                    {...{ alertProps }}
+                    {...{ inputHandles }}
                 />
                 <ColorsBar />
 

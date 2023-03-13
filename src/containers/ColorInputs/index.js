@@ -31,10 +31,9 @@ const colorInputsParams = [
     },
 ];
 // eslint-disable-next-line no-unused-vars
-export default function ColorInputs ({ currentColorProps, alertProps, ratingProps }) {  //TODO: alertProps
+export default function ColorInputs ({ currentColorProps, ratingProps, inputHandles, alertState }) {  //TODO: alertProps
     const {rating = 0, setRating = () => {}} = ratingProps;
 
-    // eslint-disable-next-line no-unused-vars
     const findObjByPropInArray = (targetProp, targetValue, objArr) => {
         if (Array.isArray(objArr) && objArr.length) {
             const targetObj = objArr.find(obj => obj.attr[targetProp] === targetValue);
@@ -61,6 +60,8 @@ export default function ColorInputs ({ currentColorProps, alertProps, ratingProp
 
         return <InputWrapper
             {...{ inputParamsReady }}
+            {...{ inputHandles }}
+            alertState={alertState}
             key={"_" + index}
         />
     });

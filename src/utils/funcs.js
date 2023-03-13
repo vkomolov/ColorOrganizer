@@ -1,3 +1,8 @@
+/**
+ *
+ * @param hexColor
+ * @returns {string}
+ */
 export function getContrastColor(hexColor) {
     // преобразуем hex-значение цвета в RGB-значение
     const rgbColor = hexToRgb(hexColor);
@@ -9,6 +14,11 @@ export function getContrastColor(hexColor) {
     return (brightness > 128) ? "#000000" : "#FFFFFF";
 }
 
+/**
+ *
+ * @param hexColor
+ * @returns {string}
+ */
 export function hexToRgb(hexColor) {
     //const hex = hexColor.replace("#", "");
     //Removing the # character from the passed value
@@ -23,18 +33,56 @@ export function hexToRgb(hexColor) {
     return `rgb(${r},${g},${b})`;
 }
 
+/**
+ *
+ * @param rgb
+ * @returns {string}
+ */
 export function rgbToHex(rgb) {
     //Splitting the value into red, green and blue channels
-    var r = parseInt(rgb.substring(4, rgb.indexOf(",")));
-    var g = parseInt(rgb.substring(rgb.indexOf(",") + 2, rgb.lastIndexOf(",")));
-    var b = parseInt(rgb.substring(rgb.lastIndexOf(",") + 2, rgb.length - 1));
+    const r = parseInt(rgb.substring(4, rgb.indexOf(",")));
+    const g = parseInt(rgb.substring(rgb.indexOf(",") + 2, rgb.lastIndexOf(",")));
+    const b = parseInt(rgb.substring(rgb.lastIndexOf(",") + 2, rgb.length - 1));
 
     // Convert channels to hexadecimal value and concatenate to string
-    var hexR = r.toString(16).padStart(2, "0");
-    var hexG = g.toString(16).padStart(2, "0");
-    var hexB = b.toString(16).padStart(2, "0");
-    var hex = "#" + hexR + hexG + hexB;
+    const hexR = r.toString(16).padStart(2, "0");
+    const hexG = g.toString(16).padStart(2, "0");
+    const hexB = b.toString(16).padStart(2, "0");
 
     // Возвращение значения в формате #hash color
-    return hex;
+    return "#" + hexR + hexG + hexB;
 }
+
+/**
+ *
+ * @param alertState
+ * @param localSource
+ * @returns {boolean}
+ */
+export function checkLocalAlert(alertState, localSource) {
+    //checking for alertState to be not empty
+    const { alertSource } = alertState;
+    const ifHasValue = Object.values(alertState).every(el => {
+        return el !== null;
+    });
+
+    return ifHasValue ? alertSource === localSource : false;
+}
+
+/**
+ *
+ * @param targetValue
+ * @param inputName
+ * @param regExObj
+ * @returns {null|*}
+ */
+export const testInput = function(targetValue, inputName, regExObj) {
+    if (inputName in regExObj) {
+        const { regEx } = regExObj[inputName];
+
+        return regEx.test(targetValue);
+    }
+
+    console.error(`no ${inputName} in regExpObj...`);
+    return null;
+};

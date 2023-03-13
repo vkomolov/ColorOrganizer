@@ -1,18 +1,27 @@
 import React from "react";
+import { checkLocalAlert } from "../../utils/funcs";
 
 import "./InputWrapper.scss";
+import AlertBlock from "../AlertBlock";
 
-export default function InputWrapper ({ inputParamsReady }) {
+export default function InputWrapper ({ inputParamsReady, inputHandles, alertState }) {
     const { type, name, title, required, value } = inputParamsReady;
+    const { onBlurHandle, onInputHandle } = inputHandles;
 
     return (
         <div className="input-wrapper">
+            {
+                checkLocalAlert(alertState, name)
+                && <AlertBlock {...alertState} />
+            }
             <input type={type}
                    name={name}
                    title={title}
                    placeholder={value}
                    required={required}
                    autoComplete="off"
+                   onBlur={onBlurHandle}
+                   onInput={onInputHandle}
             />
         </div>
     );

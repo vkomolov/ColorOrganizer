@@ -29,6 +29,10 @@
                     37% 38%
     );
 
+    &:hover {
+      animation: popupFoxy 500ms ease-in-out;
+    }
+
     &.selected {
       background-color: $foxy;
     }
