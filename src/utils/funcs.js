@@ -68,21 +68,3 @@ export function checkLocalAlert(alertState, localSource) {
 
     return ifHasValue ? alertSource === localSource : false;
 }
-
-/**
- *
- * @param targetValue
- * @param inputName
- * @param regExObj
- * @returns {null|*}
- */
-export const testInput = function(targetValue, inputName, regExObj) {
-    if (inputName in regExObj) {
-        const { regEx } = regExObj[inputName];
-
-        return regEx.test(targetValue);
-    }
-
-    console.error(`no ${inputName} in regExpObj...`);
-    return null;
-};

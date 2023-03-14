@@ -4,9 +4,7 @@ import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
 //import {rgbToHex, getContrastColor} from "../../utils/funcs";
 import { hexToRgb } from "../../utils/funcs";
-import { regExObj } from "../../utils/regExpParams"; //todo: to test inputs onInput
-import { testInput } from "../../utils/funcs";
-
+import { regExObj, testInput } from "../../utils/regExpParams"; //todo: to test inputs onInput
 
 
 export default class App extends React.Component {
@@ -66,7 +64,9 @@ export default class App extends React.Component {
     }
 
     /**
-     * */
+     *
+     * @param target
+     */
     setRating({target}) {
         if (target.dataset.num) {
             const rating = target.dataset.num;
@@ -87,7 +87,11 @@ export default class App extends React.Component {
     }
 
     /**
-     * */
+     *
+     * @param message
+     * @param source
+     * @param mode
+     */
     dispatchAlert(message, source, mode = "alert") { //null, "alert", "error"
         //if no alert on, then to set alert state
         if (this.state.alertState.alertMode === null) {
@@ -108,7 +112,8 @@ export default class App extends React.Component {
     }
 
     /**
-     * **/
+     *
+     */
     resetAlert() {
         this.setState({
             alertState: {
@@ -118,33 +123,40 @@ export default class App extends React.Component {
     }
 
     /**
-     ***/
-    onBlurHandle({ target }) {
-        log(target.value, "target.value onBlurHandle:");
-    }
-
-    onInputHandle({ target }) {
-        //log(target.name, "target.name on input:");
-        //log(target.dataset.src, "target.dataset.src");
-
+     *
+     */
+    inputValueCheck( target, regExObj, testInput, bySymbol=false ) {
         if (regExObj[target.name]) {
-            if (!testInput(target.value, target.name, regExObj)) {
+            if (!testInput(target.value, target.name, regExObj, bySymbol)) {
                 this.dispatchAlert(regExObj[target.name].errorMessage, target.name, "error");
                 setTimeout(() => {
-                    target.value = target.value.slice(0, -1);
-                    if (!target.value.length) {
-                        setTimeout(() => this.resetAlert(), 500);
+                    if (bySymbol) {
+                        target.value = target.value.slice(0, -1);
+                    } else {
+                        target.value = "";
                     }
-                }, 700);
+
+                    if (!target.value.length) {
+                        setTimeout(() => this.resetAlert(), 1000);
+                    }
+                }, 500);
             }
             else {
                 this.resetAlert();
             }
         }
-
-
     }
 
+    /**
+     ***/
+    onBlurHandle({ target }) {
+        log(target.value, "target.value onBlurHandle:");
+        this.inputValueCheck(target, regExObj, testInput, false);
+    }
+
+    onInputHandle({ target }) {
+        this.inputValueCheck(target, regExObj, testInput, true);
+    }
 
     render() {
         log("rendering");
@@ -186,12 +198,6 @@ export default class App extends React.Component {
             };
         });
 
-/*        const alertProps = {
-            alertState: this.state.alertState,
-            dispatchAlert: this.dispatchAlert,
-
-        };*/
-
         const ratingProps = {
             rating,
             setRating: this.setRating,
@@ -212,169 +218,6 @@ export default class App extends React.Component {
                     {...{ inputHandles }}
                 />
                 <ColorsBar />
-
-                {/*<div className="aside-bar">
-                    <div className="color-wrapper current">
-                        ColorSample
-                        <div className="color-sample"
-                             style={{
-                                 backgroundColor,
-                             }}
-                        >
-                            <ColorDetails
-                                copyCallBack={this.copyValue}
-                                {...{currentColorProps}}
-                            />
-                        </div>
-                        <div className="color-inputs-wrapper">
-                            <div className="input-wrapper">
-                                <input type="text"
-                                       name="color-name"
-                                       title="name the color..."
-                                       placeholder = {colorProps.colorName}
-                                       required
-                                />
-                            </div>
-                            <div className="input-wrapper">
-                                <input type="text"
-                                       name="color-hex"
-                                       title="enter color hex..."
-                                       placeholder = {colorProps.colorHex}
-                                />
-                            </div>
-                            <div className="input-wrapper">
-                                <input type="text"
-                                       name="color-rgb"
-                                       title="enter color rgb..."
-                                       placeholder = {colorProps.colorRGB}
-                                />
-                            </div>
-                            <div className="input-wrapper">
-                                <input type="color"
-                                       name="color-pattern"
-                                       title="Choose Color"
-                                       required
-                                />
-                            </div>
-                            <div className="color-rating" title="Rate the color">
-                                <span className="star selected"></span>
-                                <span className="star selected"></span>
-                                <span className="star selected"></span>
-                                <span className="star"></span>
-                                <span className="star"></span>
-                            </div>
-                            <button className="button submit">Submit</button>
-                        </div>
-                    </div>
-                </div>*/}
-                {/*<div className="colors-bar">
-                    <div className="color-list-wrapper">
-                        <h4>TOP of the colors rated:</h4>
-                        <div className="filter-wrapper">
-                            <span>Sort By: </span>
-                            <span className="filter">Rating</span>
-                            <span className="filter">Name</span>
-                        </div>
-                        <div className="color-list">
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                            <div className="color-wrapper">
-                                <div className="color-sample">
-                                    <span className="color-title">Color Item</span>
-                                </div>
-                                <div className="color-rating">
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star selected"></span>
-                                    <span className="star"></span>
-                                    <span className="star"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*/}
             </React.Fragment>
         );
     }
