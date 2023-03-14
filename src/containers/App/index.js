@@ -2,10 +2,9 @@ import React from "react";
 //containers
 import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
-//import {rgbToHex, getContrastColor} from "../../utils/funcs";
+
 import { hexToRgb } from "../../utils/funcs";
 import { regExObj, testInput } from "../../utils/regExpParams"; //todo: to test inputs onInput
-
 
 export default class App extends React.Component {
     constructor(props) {
@@ -24,9 +23,28 @@ export default class App extends React.Component {
 
         this.state = {
             colorState: {
-                colorsArr: [],
+                colorsArr: [
+                    {
+                        colorName: "White",
+                        colorHex: "#ffffff",
+                        creationDate: Date.now(),
+                        rating: 0
+                    },
+                    {
+                        colorName: "Blue",
+                        colorHex: "#222cb9",
+                        creationDate: Date.now(),
+                        rating: 0
+                    },
+                    {
+                        colorName: "Red",
+                        colorHex: "#d21e1e",
+                        creationDate: Date.now(),
+                        rating: 0
+                    },
+                ],
                 currentColor: {
-                    ...this._defaultColor
+                    ...this._defaultColor,
                 },
             },
             alertState: {
@@ -42,6 +60,18 @@ export default class App extends React.Component {
         this.onInputHandle = this.onInputHandle.bind(this);
     }
     ////////////// END OF CONSTRUCTOR ///////////////////////
+
+    componentDidMount() {
+        if (this.state.colorState.colorsArr.length) {
+            this.setState({
+                colorState: {
+                    currentColor: {
+                        ...this.state.colorState.colorsArr[0]
+                    }
+                }
+            });
+        }
+    }
 
     /**
      *
@@ -126,7 +156,7 @@ export default class App extends React.Component {
      *
      */
     inputValueCheck( target, regExObj, testInput, bySymbol=false ) {
-        if (regExObj[target.name]) {
+        if (regExObj[target.name] && target.value.length) {
             if (!testInput(target.value, target.name, regExObj, bySymbol)) {
                 this.dispatchAlert(regExObj[target.name].errorMessage, target.name, "error");
                 setTimeout(() => {
@@ -143,6 +173,7 @@ export default class App extends React.Component {
             }
             else {
                 this.resetAlert();
+
             }
         }
     }

@@ -3,11 +3,11 @@
  * @param hexColor
  * @returns {string}
  */
-export function getContrastColor(hexColor) {
-    // преобразуем hex-значение цвета в RGB-значение
-    const rgbColor = hexToRgb(hexColor);
 
-    // вычисляем яркость цвета по формуле
+export function getContrastColor(hexColor) {
+    // rendering hex-value to RGB
+    const rgbColor = hexToRgb(hexColor, true);
+    // calculating the brightness of the color
     const brightness = Math.round(((rgbColor.r * 299) + (rgbColor.g * 587) + (rgbColor.b * 114)) / 1000);
 
     // выбираем цвет текста, контрастирующий с фоном
@@ -19,7 +19,7 @@ export function getContrastColor(hexColor) {
  * @param hexColor
  * @returns {string}
  */
-export function hexToRgb(hexColor) {
+export function hexToRgb(hexColor, objectOut = false) {
     //const hex = hexColor.replace("#", "");
     //Removing the # character from the passed value
     const hex = hexColor.slice(1);
@@ -29,7 +29,10 @@ export function hexToRgb(hexColor) {
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
 
-    //return { r, g, b };
+    if(objectOut) {
+        return { r, g, b };
+    }
+
     return `rgb(${r},${g},${b})`;
 }
 
@@ -67,4 +70,10 @@ export function checkLocalAlert(alertState, localSource) {
     });
 
     return ifHasValue ? alertSource === localSource : false;
+}
+
+///////////////// dev
+// eslint-disable-next-line no-unused-vars
+function log(it, comments="value: ") {
+    console.log(comments, it);
 }

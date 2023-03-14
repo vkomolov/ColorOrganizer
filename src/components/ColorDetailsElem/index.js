@@ -1,6 +1,6 @@
 import React from "react";
 import "./ColorDetailsElem.scss";
-import { checkLocalAlert } from "../../utils/funcs";
+import { checkLocalAlert, getContrastColor } from "../../utils/funcs";
 
 import AlertBlock from "../AlertBlock";
 
@@ -13,14 +13,24 @@ export default function ColorDetailsElem (props) {
         },
         value,
         alertState,
+        currentColorHex
     } = props;
 
+    const color = getContrastColor(currentColorHex);
+    log(color, "color:");
     return (
-        <div className="color-details-elem">
-            <span className="color-details-heading">{splittedStr + ": "}</span>
-            <span data-src={prop}
-                  className={copyable ? "color-details-value copyable" : "color-details-value"}
-                  title={copyable ? "copy..." : splittedStr}
+        <div className="color-details-elem" >
+            <span
+                className="color-details-heading"
+                style={{color: color}}
+            >
+                {splittedStr + ": "}
+            </span>
+            <span
+                data-src={prop}
+                className={copyable ? "color-details-value copyable" : "color-details-value"}
+                style={{color: color}}
+                title={copyable ? "copy..." : splittedStr}
             >
                 {
                     checkLocalAlert(alertState, prop)

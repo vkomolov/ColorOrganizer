@@ -16,8 +16,12 @@
       position: relative;
       cursor: pointer;
       color: $violet;
+      animation: popup 1s ease-in-out infinite;
 
       &:hover {
+        animation: none;
+        transform: scale(1.1);
+
         @include text-shadow(0.03em, 0.05em);
       }
     }

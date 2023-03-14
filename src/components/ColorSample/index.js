@@ -13,15 +13,16 @@ export default function ColorSample (props) {
         }
         return "initial"
     };
+    const currentColorHex = getCurrentColorHex(currentColorProps);
 
     return (
         <div className="color-sample"
              style={{
-                 backgroundColor: getCurrentColorHex(currentColorProps),
+                 backgroundColor: currentColorHex
              }}
         >
             {/*//forwarding props :))*/}
-            <ColorDetails {...props} />
+            <ColorDetails {...props} currentColorHex={currentColorHex} />
         </div>
     );
 }
