@@ -16,13 +16,14 @@
       position: relative;
       cursor: pointer;
       color: $violet;
-      animation: popup 1s ease-in-out infinite;
+      animation: popupFoxy 1s ease-in-out infinite;
 
       &:hover {
         animation: none;
-        transform: scale(1.1);
+        transform: scale(1.2);
+        color: $foxy !important;
 
-        @include text-shadow(0.03em, 0.05em);
+        @include text-shadow(0.1em, 0.02em);
       }
     }
   }

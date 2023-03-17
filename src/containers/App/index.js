@@ -3,7 +3,7 @@ import React from "react";
 import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
 
-import { hexToRgb } from "../../utils/funcs";
+import { hexToRgb, equalCols } from "../../utils/funcs";
 import { regExObj, testInput } from "../../utils/regExpParams"; //todo: to test inputs onInput
 
 export default class App extends React.Component {
@@ -31,14 +31,14 @@ export default class App extends React.Component {
                         rating: 0
                     },
                     {
-                        colorName: "Blue",
-                        colorHex: "#222cb9",
+                        colorName: "Red",
+                        colorHex: "#d21e1e",
                         creationDate: Date.now(),
                         rating: 0
                     },
                     {
-                        colorName: "Red",
-                        colorHex: "#d21e1e",
+                        colorName: "Blue",
+                        colorHex: "#222cb9",
                         creationDate: Date.now(),
                         rating: 0
                     },
@@ -71,6 +71,10 @@ export default class App extends React.Component {
                 }
             });
         }
+
+        const asideBar = document.querySelector(".aside-bar");
+        const colorsBar = document.querySelector(".colors-bar");
+        equalCols(asideBar, colorsBar);
     }
 
     /**
@@ -239,6 +243,8 @@ export default class App extends React.Component {
             onInputHandle: this.onInputHandle,
         };
 
+        const { colorsArr } = this.state.colorState;
+
         return (
             <React.Fragment>
                 <AsideBar
@@ -248,7 +254,7 @@ export default class App extends React.Component {
                     {...{ currentColorProps }}
                     {...{ inputHandles }}
                 />
-                <ColorsBar />
+                <ColorsBar colorsArr={colorsArr} />
             </React.Fragment>
         );
     }

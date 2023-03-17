@@ -72,6 +72,30 @@ export function checkLocalAlert(alertState, localSource) {
     return ifHasValue ? alertSource === localSource : false;
 }
 
+/**
+ * it receives the DOM elements, measure the heights of them and makes all the elements to be of the same height;
+ * @param {...Object} elemsArr of the HTMLElements
+ */
+export function equalCols(...elemsArr) {   //for making DOM elems` height to be equal. Put them in array elemsArr
+                                           //adaptive styles for the screen with less or equal 875px
+    if (window.innerWidth <= 875) {
+        return;
+    }
+    let highestCal = 0;
+
+    for (let i = 0; i < elemsArr.length; i++) {
+        /**resetting the heights of the elements to 'auto' after rerendering the elements**/
+        elemsArr[i].style.height = "auto";
+
+        if (elemsArr[i].offsetHeight > highestCal) {
+            highestCal = elemsArr[i].offsetHeight;
+        }
+    }
+    for (let i = 0; i < elemsArr.length; i++) {
+        elemsArr[i].style.height = highestCal + "px";
+    }
+}
+
 ///////////////// dev
 // eslint-disable-next-line no-unused-vars
 function log(it, comments="value: ") {

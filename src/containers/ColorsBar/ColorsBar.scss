@@ -4,67 +4,36 @@
 
 .colors-bar {
   flex-basis: 28em;
-  //flex-grow: 1;
+  flex-grow: 1;
+  background-color: $white;
+  border: 1px solid $foxy;
   padding: 0.5em;
 
-  @include flex-box($flex-box-row-center...);
+  @include flex-box($flex-box-row-top...);
 
   .color-list-wrapper {
-    max-width: 30em;
+    width: 100%;
+    max-width: 30em;  //for small media queries
 
-    @include flex-box($flex-box-row-center...);
+    @include flex-box($flex-box-col-center...);
 
     h4 {
+      width: 100%;
       text-align: center;
       line-height: 1.2em;
-    }
+      color: $foxy;
+      margin-top: 0.5em;
 
-    .filter-wrapper {
-      width: 100%;
-      margin-top: 1em;
-
-      span {
-        display: inline-block;
-        margin: 0.2em 0.3em;
-      }
-
-      .filter {
-        position: relative;
-        cursor: pointer;
-        padding: 0.3em;
-
-        @include init-font(1em, 700);
-        @include transition(transform, 0.15s);
-
-        &:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          transform: skewX(-20deg);
-          background-color: $violet;
-          opacity: 0.3;
-
-          @include transition(all, 0.2s);
-        }
-
-        &:hover {
-          transform: translateY(-0.1em);
-          @include text-shadow(0.05em, 0.07em);
-
-          &::before {
-            opacity: 0;
-          }
-        }
-      }
+      @include init-font(1.5em, 700);
+      @include text-shadow(0.1em, 0.1em);
     }
 
     .color-list {
+      width: 100%;
+      max-width: 30em;
       margin: 0.7em 0;
       border: 1px solid $greyLight;
-      max-width: 30em;
+
       @include flex-box($flex-box-row-center...);
     }
   }

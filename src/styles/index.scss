@@ -8,7 +8,7 @@
 
 body {
   font-family: "Georgia", sans-serif;
-  background: url("../asset/images/crossword.png");
+  background: $greyNorm;
   background-size: cover;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -30,8 +30,8 @@ body:before {
 
 #root {
   font-size: 1rem;
-  max-width: 45em;
-  background-color: $white;
+  max-width: 53.3em;
+  background-color: $foxyGrey;
   margin: 0 auto;
   padding: 1.5em 0.5em;
 

@@ -7,8 +7,10 @@
   padding: 0.5em 0;
 
   .color-inputs-heading {
-    @extend %heading-details;
+    text-align: center;
     padding: 0 0.5em;
+
+    @extend %heading-details;
   }
 
   .color-inputs-wrapper {

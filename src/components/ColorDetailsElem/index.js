@@ -17,7 +17,7 @@ export default function ColorDetailsElem (props) {
     } = props;
 
     const color = getContrastColor(currentColorHex);
-    log(color, "color:");
+
     return (
         <div className="color-details-elem" >
             <span
