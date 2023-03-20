@@ -1,7 +1,8 @@
 import React from "react";
 import "./ColorDetails.scss";
+import { getContrastColor } from "../../utils/funcs";
 //components
-import ColorDetailsElem from "../ColorDetailsElem";
+import ColorDetailsElem from "../../components/ColorDetailsElem";
 
 export default function ColorDetails ({ currentColorProps, alertState, copyValue, currentColorHex }) {
     //the properties of the color are mapped for forwarding separate components
@@ -17,9 +18,12 @@ export default function ColorDetails ({ currentColorProps, alertState, copyValue
 
     return (
         <div id="color-details"
-             onClick={copyValue}
+             onClick={ copyValue }
         >
-            <h4 className="color-sample-heading">
+            <h4
+                className="color-sample-heading"
+                style={{color: getContrastColor(currentColorHex)}}
+            >
                 Current Color:
             </h4>
             { dataPropElems }

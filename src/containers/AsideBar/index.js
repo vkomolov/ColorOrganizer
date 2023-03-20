@@ -1,5 +1,5 @@
 import React from "react";
-import ColorSample from "../../components/ColorSample";
+import ColorSample from "../ColorSample";
 import ColorInputs from "../ColorInputs";
 import "./AsideBar.scss";
 

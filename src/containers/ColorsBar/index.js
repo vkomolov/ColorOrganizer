@@ -1,19 +1,17 @@
 import React from "react";
-import ColorFilter from "../../components/ColorFilter";
+import ColorsFilter from "../../containers/ColorsFilter";
 import ColorList from "../ColorList";
 
 import "./ColorsBar.scss";
 
-export default function ColorsBar ({colorsArr}) {
-    log(colorsArr, "colorsArr");
+export default function ColorsBar ({ filters, colorsArr }) {
 
     return (
         <div className="colors-bar">
             <div className="color-list-wrapper">
                 <h4>Color List</h4>
-                <ColorFilter />
-                <ColorList />
-
+                <ColorsFilter filters={ filters } />
+                <ColorList colorsArr={ colorsArr } />
             </div>
         </div>
     );

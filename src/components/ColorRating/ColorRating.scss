@@ -9,13 +9,17 @@
   text-align: center;
   @include flex-box($flex-box-row-center...);
 
+  &.min {
+    font-size: 0.7rem;
+  }
+
   .star {
     display: inline-block;
     cursor: pointer;
     height: 1.3em;
     width: 1.3em;
     margin: 0 0.1em;
-    background-color: grey;
+    background-color: $greyNorm;
     clip-path: polygon(
                     50% 0%,
                     63% 38%,
@@ -29,8 +33,15 @@
                     37% 38%
     );
 
+    &.min {
+      cursor: initial;
+      //height: 0.5em;
+      //width: 0.5em;
+      //margin: 0;
+    }
+
     &:hover {
-      animation: popupFoxy 500ms ease-in-out;
+      animation: popupBackgroundFoxy 500ms ease-in-out;
     }
 
     &.selected {

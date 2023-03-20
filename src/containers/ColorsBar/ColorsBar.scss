@@ -3,7 +3,7 @@
 @import "../../styles/global_styles/animations";
 
 .colors-bar {
-  flex-basis: 28em;
+  flex-basis: 258px;
   flex-grow: 1;
   background-color: $white;
   border: 1px solid $foxy;
@@ -13,7 +13,7 @@
 
   .color-list-wrapper {
     width: 100%;
-    max-width: 30em;  //for small media queries
+    max-width: 33em;  //for small media queries
 
     @include flex-box($flex-box-col-center...);
 
@@ -24,17 +24,8 @@
       color: $foxy;
       margin-top: 0.5em;
 
-      @include init-font(1.5em, 700);
+      @include init-font(1.3em, 700);
       @include text-shadow(0.1em, 0.1em);
-    }
-
-    .color-list {
-      width: 100%;
-      max-width: 30em;
-      margin: 0.7em 0;
-      border: 1px solid $greyLight;
-
-      @include flex-box($flex-box-row-center...);
     }
   }
 }

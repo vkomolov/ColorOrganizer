@@ -1,7 +1,9 @@
 import React from "react";
+import "./ColorSample.scss";
+
 //components
 import ColorDetails from "../ColorDetails";
-import "./ColorSample.scss";
+
 
 export default function ColorSample (props) {
     const { currentColorProps } = props;

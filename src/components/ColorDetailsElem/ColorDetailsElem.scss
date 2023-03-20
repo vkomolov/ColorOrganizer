@@ -22,8 +22,6 @@
         animation: none;
         transform: scale(1.2);
         color: $foxy !important;
-
-        @include text-shadow(0.1em, 0.02em);
       }
     }
   }

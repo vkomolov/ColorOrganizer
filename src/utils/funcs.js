@@ -76,11 +76,7 @@ export function checkLocalAlert(alertState, localSource) {
  * it receives the DOM elements, measure the heights of them and makes all the elements to be of the same height;
  * @param {...Object} elemsArr of the HTMLElements
  */
-export function equalCols(...elemsArr) {   //for making DOM elems` height to be equal. Put them in array elemsArr
-                                           //adaptive styles for the screen with less or equal 875px
-    if (window.innerWidth <= 875) {
-        return;
-    }
+export function equalCols(...elemsArr) {
     let highestCal = 0;
 
     for (let i = 0; i < elemsArr.length; i++) {
@@ -93,6 +89,39 @@ export function equalCols(...elemsArr) {   //for making DOM elems` height to be 
     }
     for (let i = 0; i < elemsArr.length; i++) {
         elemsArr[i].style.height = highestCal + "px";
+    }
+}
+
+/**
+ *
+ * @param text
+ */
+export function splitAndUpperCase(text) {
+    if (typeof text === "string" && text.trim().length) {
+        return text.trim().split(/(?=[A-Z])/)
+            .map(str => {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            })
+            .join(" ");
+    }
+    return false;
+}
+
+/**
+ *
+ * @param text
+ * @param chars
+ * @returns {string}
+ */
+export function limitText(text, charsLength=0) {
+    if (typeof text === "string" && text.trim().length && charsLength > 0) {
+        let textOut = text.trim();
+
+        if (textOut.length > charsLength) {
+            textOut = textOut.slice(0, charsLength-3) + "...";
+        }
+
+        return textOut;
     }
 }
 

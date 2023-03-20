@@ -3,7 +3,7 @@ import React from "react";
 import AsideBar from "../AsideBar";
 import ColorsBar from "../ColorsBar";
 
-import { hexToRgb, equalCols } from "../../utils/funcs";
+import { hexToRgb, equalCols, splitAndUpperCase } from "../../utils/funcs";
 import { regExObj, testInput } from "../../utils/regExpParams"; //todo: to test inputs onInput
 
 export default class App extends React.Component {
@@ -25,22 +25,22 @@ export default class App extends React.Component {
             colorState: {
                 colorsArr: [
                     {
-                        colorName: "White",
-                        colorHex: "#ffffff",
-                        creationDate: Date.now(),
-                        rating: 0
-                    },
-                    {
-                        colorName: "Red",
+                        colorName: "Red Extra",
                         colorHex: "#d21e1e",
                         creationDate: Date.now(),
                         rating: 0
                     },
                     {
+                        colorName: "White Regular",
+                        colorHex: "#ffffff",
+                        creationDate: Date.now(),
+                        rating: 3
+                    },
+                    {
                         colorName: "Blue",
                         colorHex: "#222cb9",
                         creationDate: Date.now(),
-                        rating: 0
+                        rating: 2
                     },
                 ],
                 currentColor: {
@@ -49,7 +49,21 @@ export default class App extends React.Component {
             },
             alertState: {
                ...this._defaultAlert
-            }
+            },
+            filters: [
+                {
+                    filterName: "creationDate",
+                    isActive: true,
+                },
+                {
+                    filterName: "colorName",
+                    isActive: false,
+                },
+                {
+                    filterName: "rating",
+                    isActive: false,
+                },
+            ],
         };
 
         this.setRating = this.setRating.bind(this);
@@ -63,18 +77,24 @@ export default class App extends React.Component {
 
     componentDidMount() {
         if (this.state.colorState.colorsArr.length) {
-            this.setState({
+            this.setState(prevState => ({
                 colorState: {
+                    ...prevState.colorState,
                     currentColor: {
-                        ...this.state.colorState.colorsArr[0]
+                        ...prevState.colorState.colorsArr[0],
                     }
                 }
-            });
+            }));
         }
 
         const asideBar = document.querySelector(".aside-bar");
         const colorsBar = document.querySelector(".colors-bar");
-        equalCols(asideBar, colorsBar);
+
+        //for making DOM elems` height to be equal. Put them in array elemsArr adaptive styles for the screen with
+        // less or equal 505px
+        if (window.innerWidth >= 480) {
+            equalCols(asideBar, colorsBar);
+        }
     }
 
     /**
@@ -110,6 +130,7 @@ export default class App extends React.Component {
             if (rating !== currentColor.rating) {
                 this.setState(prevState => ({
                     colorState: {
+                        ...prevState.colorState,
                         currentColor: {
                             ...prevState.colorState.currentColor,
                             rating
@@ -189,6 +210,10 @@ export default class App extends React.Component {
         this.inputValueCheck(target, regExObj, testInput, false);
     }
 
+    /**
+     *
+     * @param target
+     */
     onInputHandle({ target }) {
         this.inputValueCheck(target, regExObj, testInput, true);
     }
@@ -208,11 +233,7 @@ export default class App extends React.Component {
         };
 
         const currentColorProps = Object.keys(colorProps).map(prop => {
-            let splittedStr = prop.split(/(?=[A-Z])/)
-                .map(str => {
-                return str.charAt(0).toUpperCase() + str.slice(1);
-            })
-                .join(" ");
+            let splittedStr = splitAndUpperCase(prop);
 
             const copyable = prop === "colorName" || prop === "colorHex" || prop === "colorRgb";
             let auxValue = colorProps[prop];
@@ -245,6 +266,8 @@ export default class App extends React.Component {
 
         const { colorsArr } = this.state.colorState;
 
+        const { filters } = this.state;
+
         return (
             <React.Fragment>
                 <AsideBar
@@ -254,7 +277,10 @@ export default class App extends React.Component {
                     {...{ currentColorProps }}
                     {...{ inputHandles }}
                 />
-                <ColorsBar colorsArr={colorsArr} />
+                <ColorsBar
+                    filters={filters}
+                    colorsArr={colorsArr}
+                />
             </React.Fragment>
         );
     }

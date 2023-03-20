@@ -2,15 +2,17 @@ import React from "react";
 
 import "./ColorRating.scss";
 
-export default function ColorRating ({rating, setRating}) {
+export default function ColorRating ({rating, setRating = null}) {
     const starList = [];
+    let wrapperClassName = setRating ? "color-rating" : "color-rating min";
 
     for (let i = 1; i <= 5; i++) {
-        let classNameAux = i <= rating ? "star selected" : "star";
+        let classNameAux = setRating ? "star" : "star min";
+        let classNameOut = i <= rating ? classNameAux + " selected" : classNameAux;
 
         starList.push(
             <span
-                className={classNameAux}
+                className={classNameOut}
                 data-num = {i}
                 key={i+"star"}
             />
@@ -19,7 +21,7 @@ export default function ColorRating ({rating, setRating}) {
 
     return (
         <div
-            className="color-rating"
+            className={ wrapperClassName }
             title="Rate the color"
             onClick={setRating}
         >
