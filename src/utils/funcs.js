@@ -125,6 +125,13 @@ export function limitText(text, charsLength=0) {
     }
 }
 
+export function sortEqualTypeValues(a, b) {
+    if (typeof a === "number" && typeof b === "number") {
+        return b - a;
+    }
+    return a > b ? 1 : a < b ? -1 : 0;
+}
+
 ///////////////// dev
 // eslint-disable-next-line no-unused-vars
 function log(it, comments="value: ") {

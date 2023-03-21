@@ -2,7 +2,7 @@ import React from "react";
 import "./ColorsFilter.scss";
 import FilterItem from "../../components/FilterItem";
 
-export default function ColorFilter({ filters }) {
+export default function ColorFilter({ filters, setFilter }) {
     const filtersArr = filters.map((filterItem, index) => {
         const { filterName } = filterItem;
         return <FilterItem filterData={ filterItem } key={index + filterName} />
@@ -13,7 +13,10 @@ export default function ColorFilter({ filters }) {
             <span className="filter-heading">
                 Use filter by:
             </span>
-            <div className="filter-section">
+            <div
+                className="filter-section"
+                onClick={ setFilter }
+            >
                 { filtersArr }
             </div>
         </div>

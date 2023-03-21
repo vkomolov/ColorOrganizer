@@ -4,16 +4,15 @@
 
 .alert-message {
   position: absolute;
-  left: 0;
+  left: 50%;
   bottom: 100%;
+  transform: translateX(-50%);
   width: max-content;
   padding: 0.5em;
   background-color: $white;
   color: $green;
   border: 1px solid $greyLight;
   cursor: initial;
-
-  animation: scaleUpZero 0.5s ease-in-out;
 
   @include init-font(0.8em, 700);
 

@@ -27,20 +27,20 @@ export default class App extends React.Component {
                     {
                         colorName: "Red Extra",
                         colorHex: "#d21e1e",
-                        creationDate: Date.now(),
+                        creationDate: 1679392604257,
                         rating: 0
-                    },
-                    {
-                        colorName: "White Regular",
-                        colorHex: "#ffffff",
-                        creationDate: Date.now(),
-                        rating: 3
                     },
                     {
                         colorName: "Blue",
                         colorHex: "#222cb9",
-                        creationDate: Date.now(),
+                        creationDate: 1679392603948,
                         rating: 2
+                    },
+                    {
+                        colorName: "White Regular",
+                        colorHex: "#ffffff",
+                        creationDate: 1679392703322,
+                        rating: 3
                     },
                 ],
                 currentColor: {
@@ -52,7 +52,7 @@ export default class App extends React.Component {
             },
             filters: [
                 {
-                    filterName: "creationDate",
+                    filterName: "rating",
                     isActive: true,
                 },
                 {
@@ -60,7 +60,7 @@ export default class App extends React.Component {
                     isActive: false,
                 },
                 {
-                    filterName: "rating",
+                    filterName: "creationDate",
                     isActive: false,
                 },
             ],
@@ -72,6 +72,7 @@ export default class App extends React.Component {
         this.resetAlert = this.resetAlert.bind(this);
         this.onBlurHandle = this.onBlurHandle.bind(this);
         this.onInputHandle = this.onInputHandle.bind(this);
+        this.setFilter = this.setFilter.bind(this);
     }
     ////////////// END OF CONSTRUCTOR ///////////////////////
 
@@ -107,7 +108,7 @@ export default class App extends React.Component {
 
             try {
                 await navigator.clipboard.writeText(value);
-                log(value, "copied:");
+                //log(value, "copied:");
 
                 this.dispatchAlert("copied...", targetSrc, "alert");
             }
@@ -124,7 +125,7 @@ export default class App extends React.Component {
     setRating({target}) {
         if (target.dataset.num) {
             const rating = target.dataset.num;
-            log(rating, "star rated:");
+            //log(rating, "star rated:");
             const {colorState: {currentColor}} = this.state;
 
             if (rating !== currentColor.rating) {
@@ -161,7 +162,7 @@ export default class App extends React.Component {
             if (mode === "alert") {
                 setTimeout(() => {
                     this.resetAlert();
-                }, 1500);
+                }, 700);
             }
         }
     }
@@ -206,7 +207,7 @@ export default class App extends React.Component {
     /**
      ***/
     onBlurHandle({ target }) {
-        log(target.value, "target.value onBlurHandle:");
+        //log(target.value, "target.value onBlurHandle:");
         this.inputValueCheck(target, regExObj, testInput, false);
     }
 
@@ -216,6 +217,24 @@ export default class App extends React.Component {
      */
     onInputHandle({ target }) {
         this.inputValueCheck(target, regExObj, testInput, true);
+    }
+
+    setFilter({ target }) {
+        if (!Array.from(target.classList).includes("active") && target.dataset.filter) {
+            this.setState(prevState => {
+                const filtersUpdated = prevState.filters.map(filter => {
+                    const isActive = filter.filterName === target.dataset.filter;
+                    return {
+                        filterName: filter.filterName,
+                        isActive
+                    }
+                });
+
+                return {
+                    filters: filtersUpdated
+                }
+            });
+        }
     }
 
     render() {
@@ -278,6 +297,7 @@ export default class App extends React.Component {
                     {...{ inputHandles }}
                 />
                 <ColorsBar
+                    setFilter={this.setFilter}
                     filters={filters}
                     colorsArr={colorsArr}
                 />

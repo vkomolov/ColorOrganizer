@@ -4,14 +4,21 @@ import ColorList from "../ColorList";
 
 import "./ColorsBar.scss";
 
-export default function ColorsBar ({ filters, colorsArr }) {
+export default function ColorsBar ({ filters, colorsArr, setFilter }) {
+    const filterActive = filters.filter(filter => filter["isActive"] === true)[0];
 
     return (
         <div className="colors-bar">
             <div className="color-list-wrapper">
                 <h4>Color List</h4>
-                <ColorsFilter filters={ filters } />
-                <ColorList colorsArr={ colorsArr } />
+                <ColorsFilter
+                    filters={ filters }
+                    setFilter={ setFilter }
+                />
+                <ColorList
+                    colorsArr={ colorsArr }
+                    sortBy={ filterActive["filterName"] }
+                />
             </div>
         </div>
     );

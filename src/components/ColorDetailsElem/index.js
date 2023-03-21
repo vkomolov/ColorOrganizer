@@ -1,6 +1,6 @@
 import React from "react";
 import "./ColorDetailsElem.scss";
-import { checkLocalAlert, getContrastColor, limitText } from "../../utils/funcs";
+import { checkLocalAlert, getContrastColor } from "../../utils/funcs";
 
 import AlertBlock from "../AlertBlock";
 
@@ -16,10 +16,7 @@ export default function ColorDetailsElem (props) {
         currentColorHex
     } = props;
 
-    const maxValueLength = 16;
-
     const color = getContrastColor(currentColorHex);
-    const valueLimited = limitText(value, maxValueLength);
 
     return (
         <div className="color-details-elem" >
@@ -39,7 +36,7 @@ export default function ColorDetailsElem (props) {
                     checkLocalAlert(alertState, prop)
                     && <AlertBlock {...alertState} />
                 }
-                { valueLimited }
+                { value }
             </span>
         </div>
     );

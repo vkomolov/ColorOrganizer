@@ -1,5 +1,5 @@
 import React from "react";
-import { checkLocalAlert, limitText } from "../../utils/funcs";
+import { checkLocalAlert } from "../../utils/funcs";
 
 import "./InputWrapper.scss";
 import AlertBlock from "../AlertBlock";
@@ -8,7 +8,6 @@ export default function InputWrapper ({ inputParamsReady, inputHandles, alertSta
     const inputLengthMax = 16;
     const { type, name, title, required, value } = inputParamsReady;
     const { onBlurHandle, onInputHandle } = inputHandles;
-    const valueAux = limitText(value, inputLengthMax);
 
     return (
         <div className="input-wrapper">
@@ -19,7 +18,7 @@ export default function InputWrapper ({ inputParamsReady, inputHandles, alertSta
             <input type={ type }
                    name={ name }
                    title={ title }
-                   placeholder={ valueAux }
+                   placeholder={ value }
                    maxLength={ inputLengthMax }
                    required={ required }
                    autoComplete="off"

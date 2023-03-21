@@ -1,11 +1,16 @@
 import React from "react";
 import "./ColorList.scss";
+import { sortEqualTypeValues } from "../../utils/funcs";
 import ColorElem from "../../components/ColorElem";
 
-export default function ColorList({ colorsArr }) {
+export default function ColorList({ colorsArr, sortBy }) {
     let colors = null;
     if (colorsArr.length) {
-        colors = colorsArr.map((colorElem, index) => {
+        const colorsSorted = colorsArr.sort((colorA, colorB) => {
+            return sortEqualTypeValues(colorA[sortBy], colorB[sortBy]);
+        });
+
+        colors = colorsSorted.map((colorElem, index) => {
             const {colorName, rating, colorHex} = colorElem;
 
             return <ColorElem
