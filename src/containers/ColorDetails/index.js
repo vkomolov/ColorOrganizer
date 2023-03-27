@@ -1,6 +1,6 @@
 import React from "react";
 import "./ColorDetails.scss";
-import { getContrastColor } from "../../utils/funcs";
+import { getContrastColor, hexToRgb } from "../../utils/funcs";
 //components
 import ColorDetailsElem from "../../components/ColorDetailsElem";
 
@@ -22,7 +22,7 @@ export default function ColorDetails ({ currentColorProps, alertState, copyValue
         >
             <h4
                 className="color-sample-heading"
-                style={{color: getContrastColor(currentColorHex)}}
+                style={{color: getContrastColor(currentColorHex, hexToRgb)}}
             >
                 Current Color:
             </h4>

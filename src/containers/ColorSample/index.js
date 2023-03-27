@@ -13,7 +13,7 @@ export default function ColorSample (props) {
                 return currentColorProps[i].value;
             }
         }
-        return "initial"
+        return "initial";
     };
     const currentColorHex = getCurrentColorHex(currentColorProps);
 

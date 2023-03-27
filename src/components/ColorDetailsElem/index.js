@@ -1,6 +1,6 @@
 import React from "react";
 import "./ColorDetailsElem.scss";
-import { checkLocalAlert, getContrastColor } from "../../utils/funcs";
+import { checkLocalAlert, getContrastColor, hexToRgb } from "../../utils/funcs";
 
 import AlertBlock from "../AlertBlock";
 
@@ -16,7 +16,7 @@ export default function ColorDetailsElem (props) {
         currentColorHex
     } = props;
 
-    const color = getContrastColor(currentColorHex);
+    const color = getContrastColor(currentColorHex, hexToRgb);
 
     return (
         <div className="color-details-elem" >

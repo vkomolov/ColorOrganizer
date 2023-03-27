@@ -10,8 +10,8 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this._defaultColor = {
-            colorName: "White",
-            colorHex: "#ffffff",
+            colorName: "Color Name",
+            colorHex: "",
             creationDate: Date.now(),
             rating: 0
         };
@@ -20,6 +20,8 @@ export default class App extends React.Component {
             alertSource: null,   //where to handle alert in absolute position
             alertMessage: null, //what will be shown in alert
         };
+
+        this._refs = [];
 
         this.state = {
             colorState: {
@@ -73,6 +75,9 @@ export default class App extends React.Component {
         this.onBlurHandle = this.onBlurHandle.bind(this);
         this.onInputHandle = this.onInputHandle.bind(this);
         this.setFilter = this.setFilter.bind(this);
+        this.onKeyDownHandle = this.onKeyDownHandle.bind(this);
+        this.setRef = this.setRef.bind(this);
+
     }
     ////////////// END OF CONSTRUCTOR ///////////////////////
 
@@ -237,6 +242,34 @@ export default class App extends React.Component {
         }
     }
 
+    onKeyDownHandle(event) {
+        if (event.key === "Enter") {
+
+            //log("key Enter pushed..");
+            //log(event.target.name, "event.target.name");
+
+            event.preventDefault();
+            const refIndex = this._refs.findIndex(input => input.name === event.target.name);
+            if (refIndex !== -1) {
+                //log(refIndex, "refIndex from refs");
+                const nextInputIndex = refIndex + 1;
+                if (nextInputIndex < this._refs.length) {
+                    this._refs[nextInputIndex].focus();
+                }
+            }
+        }
+    }
+
+    setRef(ref) {
+        this._refs = [
+            ...this._refs,
+            ref,
+        ];
+        //this._refs = this._refs.concat()
+
+        //log(this._refs, "this._refs");
+    }
+
     render() {
         log("rendering");
         const { colorName, colorHex, creationDate, rating } = this.state.colorState.currentColor;
@@ -281,6 +314,8 @@ export default class App extends React.Component {
         const inputHandles = {
             onBlurHandle: this.onBlurHandle,
             onInputHandle: this.onInputHandle,
+            onKeyDownHandle: this.onKeyDownHandle,
+            setRef: this.setRef,
         };
 
         const { colorsArr } = this.state.colorState;

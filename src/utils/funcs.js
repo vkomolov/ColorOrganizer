@@ -4,7 +4,7 @@
  * @returns {string}
  */
 
-export function getContrastColor(hexColor) {
+export function getContrastColor(hexColor, hexToRgb) {
     // rendering hex-value to RGB
     const rgbColor = hexToRgb(hexColor, true);
     // calculating the brightness of the color
@@ -17,12 +17,22 @@ export function getContrastColor(hexColor) {
 /**
  *
  * @param hexColor
- * @returns {string}
+ * @returns {string |  Object | boolean}
  */
 export function hexToRgb(hexColor, objectOut = false) {
+    const regExHex = /^#([a-f0-9]{6}|[A-Fa-f0-9]{3})$/i;
+    const hexColorIn = hexColor.trim();
+    if (!regExHex.test(hexColorIn)) {
+        console.error(`given ${hexColorIn} is not correct`);
+        return false;
+    }
     //const hex = hexColor.replace("#", "");
     //Removing the # character from the passed value
-    const hex = hexColor.slice(1);
+    let hex = hexColorIn.slice(1);
+    if (hex.length === 3) {
+        //hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        hex = Array.from(hex).map(char => char + char).join("");
+    }
 
     //Splitting the value into red, green and blue channels
     const r = parseInt(hex.substring(0, 2), 16);
@@ -40,6 +50,7 @@ export function hexToRgb(hexColor, objectOut = false) {
  *
  * @param rgb
  * @returns {string}
+ * TODO: to remake parsing with testing RegEx
  */
 export function rgbToHex(rgb) {
     //Splitting the value into red, green and blue channels

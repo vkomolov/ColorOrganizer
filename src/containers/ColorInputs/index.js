@@ -30,9 +30,9 @@ const colorInputsParams = [
         required: false
     },
 ];
-// eslint-disable-next-line no-unused-vars
+
 export default function ColorInputs ({ currentColorProps, ratingProps, inputHandles, alertState }) {  //TODO: alertProps
-    const {rating = 0, setRating = () => {}} = ratingProps;
+    const {rating = 0, setRating = f => f} = ratingProps;
 
     const findObjByPropInArray = (targetProp, targetValue, objArr) => {
         if (Array.isArray(objArr) && objArr.length) {
@@ -76,8 +76,8 @@ export default function ColorInputs ({ currentColorProps, ratingProps, inputHand
                 }
             </div>
             <div className="button-section">
-                <div className="button save">Save</div>
-                <div className="button cancel">Cancel</div>
+                <div className="button save" tabIndex={0}>Save</div>
+                <div className="button cancel" tabIndex={0}>Cancel</div>
             </div>
         </div>
     );

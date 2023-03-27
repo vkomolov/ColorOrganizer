@@ -7,7 +7,7 @@ import AlertBlock from "../AlertBlock";
 export default function InputWrapper ({ inputParamsReady, inputHandles, alertState }) {
     const inputLengthMax = 16;
     const { type, name, title, required, value } = inputParamsReady;
-    const { onBlurHandle, onInputHandle } = inputHandles;
+    const { onBlurHandle, onInputHandle, onKeyDownHandle, setRef } = inputHandles;
 
     return (
         <div className="input-wrapper">
@@ -22,8 +22,11 @@ export default function InputWrapper ({ inputParamsReady, inputHandles, alertSta
                    maxLength={ inputLengthMax }
                    required={ required }
                    autoComplete="off"
+                   tabIndex={0}
+                   ref={setRef}
                    onBlur={ onBlurHandle }
                    onInput={ onInputHandle }
+                   onKeyDown={ onKeyDownHandle }
             />
         </div>
     );

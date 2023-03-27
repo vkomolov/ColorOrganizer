@@ -6,7 +6,8 @@
   margin-bottom: 0.3em;
 
   .color-details-heading {
-
+    display: inline-block;
+    width: 7em;
   }
 
   .color-details-value {
@@ -15,12 +16,13 @@
     &.copyable {
       position: relative;
       cursor: pointer;
-      color: $violet;
-      animation: popupFoxy 1s ease-in-out infinite;
+      color: $violet !important;
+      //animation: popupFoxy 1s ease-in-out infinite;
+      @include transition(transform, 0.2s);
 
       &:hover {
-        animation: none;
-        transform: scale(1.2);
+        //animation: none;
+        transform: scale(1.1);
         color: $foxy !important;
       }
     }
